@@ -133,5 +133,43 @@ def guess_letter():
         lives_left -= 1
 
 
+def check_for_game_over():
+    global lives_left
+    global game_over
+    global correctly_guessed_letters
 
+    if lives_left <= 0:
+        game_over = True
+        draw_hangman()
+        print("You lost! The word was " + randomly_chosen_word + ". Try again next time!")
+    else:
+        guessed_all_letters = True
+        for letter in randomly_chosen_word:
+            if letter not in correctly_guessed_letters:
+                guessed_all_letters = False
+                break
+        if guessed_all_letters:
+            game_over = True
+            print("You won! Congrats, and feel free to play again!")
+
+def main():
+    global game_over
+
+    print("-----Welcome to Hangman----")
+    choose_random_word()
+
+    while game_over is False:
+        draw_hangman()
+        draw_word()
+
+        if len(incorrectly_guessed_letters) > 0:
+            print("Incorrect guesses: ")
+            print(incorrectly_guessed_letters)
+
+        guess_letter()
+        check_for_game_over()
+
+
+if __name__ == '__main__':
+    main()
 
